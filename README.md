@@ -85,7 +85,7 @@ cd nasa-apod-explorer
 
 ---
 
-## 🔑 API Key Setup
+## API Key Setup
 
 The project requires a NASA API key.
 
@@ -96,7 +96,7 @@ To run this project:
 
 ---
 
-## 🧠 Concepts Used
+## Concepts Used
 
 - Fetch API for asynchronous data retrieval
 - DOM manipulation

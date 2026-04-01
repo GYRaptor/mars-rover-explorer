@@ -3,7 +3,6 @@ const API_KEY = "Aj4ZZNvf65Rdd6Yt1lfuoaIK3gRr6MUXVht46XRW";
 let apodData = [];
 let filteredData = [];
 
-// FETCH DATA
 async function fetchAPOD() {
   showLoader(true);
 
@@ -26,7 +25,6 @@ async function fetchAPOD() {
   showLoader(false);
 }
 
-// DISPLAY
 function displayData(data) {
   const container = document.getElementById("container");
   container.innerHTML = "";
@@ -44,23 +42,19 @@ function displayData(data) {
 
     card.innerHTML = `
       <h3>${item.title}</h3>
-
       ${
         item.media_type === "image"
           ? `<img src="${item.url}" alt="${item.title}">`
           : `<iframe src="${item.url}" frameborder="0"></iframe>`
       }
-
       <p>${formattedDate}</p>
-      <p>${item.explanation.slice(0, 120)}...</p>
+      <p>${item.explanation.slice(0, 100)}...</p>
 
-      <div class="btns">
-        <a href="${item.hdurl}" target="_blank">
-          <button>View HD</button>
-        </a>
+      <a href="${item.hdurl}" target="_blank">
+        <button>View HD</button>
+      </a>
 
-        <button onclick='saveFavorite(${JSON.stringify(item)})'>Save</button>
-      </div>
+      <button onclick='saveFavorite(${JSON.stringify(item)})'>Save</button>
     `;
 
     container.appendChild(card);
@@ -71,7 +65,7 @@ function displayData(data) {
   });
 }
 
-// SEARCH
+
 document.getElementById("searchInput").addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
 
@@ -82,7 +76,7 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   displayData(filteredData);
 });
 
-// SORT
+
 document.getElementById("sortSelect").addEventListener("change", (e) => {
   const value = e.target.value;
 
@@ -95,7 +89,7 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
   displayData(filteredData);
 });
 
-// DATE FILTER
+
 document.getElementById("datePicker").addEventListener("change", async (e) => {
   const date = e.target.value;
 
@@ -113,7 +107,7 @@ document.getElementById("datePicker").addEventListener("change", async (e) => {
   showLoader(false);
 });
 
-// FAVORITES
+
 function saveFavorite(item) {
   let favs = JSON.parse(localStorage.getItem("favorites")) || [];
   favs.push(item);
@@ -121,15 +115,15 @@ function saveFavorite(item) {
   alert("Saved!");
 }
 
-// THEME TOGGLE
+
 document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("light");
 });
 
-// LOADER
+
 function showLoader(state) {
   document.getElementById("loader").style.display = state ? "block" : "none";
 }
 
-// INIT
+
 fetchAPOD();

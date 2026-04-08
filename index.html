@@ -9,8 +9,12 @@
 </head>
 <body>
 
+  <video autoplay muted loop id="bg-video">
+    <source src="./media/14081587_1920_1080_60fps.mp4" type="video/mp4">
+  </video>
+
   <header>
-    <h1>🛰️ NASA APOD Explorer</h1>
+    <h1>NASA APOD Explorer</h1>
 
     <div class="controls">
       <input type="date" id="datePicker">
@@ -23,9 +27,11 @@
       </select>
 
       <button onclick="fetchAPOD()">Random</button>
-      <button id="themeToggle">🌙</button>
+      <button id="themeToggle">Theme</button>
     </div>
   </header>
+
+  <h2 class="section-title">Explore Space</h2>
 
   <div id="loader">Loading space data...</div>
 

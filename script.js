@@ -42,19 +42,23 @@ function displayData(data) {
 
     card.innerHTML = `
       <h3>${item.title}</h3>
+
       ${
         item.media_type === "image"
           ? `<img src="${item.url}" alt="${item.title}">`
-          : `<iframe src="${item.url}" frameborder="0"></iframe>`
+          : `<iframe src="${item.url}" allowfullscreen></iframe>`
       }
+
       <p>${formattedDate}</p>
-      <p>${item.explanation.slice(0, 100)}...</p>
+      <p>${item.explanation.slice(0, 120)}...</p>
 
-      <a href="${item.hdurl}" target="_blank">
-        <button>View HD</button>
-      </a>
+      <div class="btns">
+        <a href="${item.hdurl}" target="_blank">
+          <button>View HD</button>
+        </a>
 
-      <button onclick='saveFavorite(${JSON.stringify(item)})'>Save</button>
+        <button onclick='saveFavorite(${JSON.stringify(item)})'>Save</button>
+      </div>
     `;
 
     container.appendChild(card);
@@ -64,7 +68,6 @@ function displayData(data) {
     }, 100);
   });
 }
-
 
 document.getElementById("searchInput").addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
@@ -89,7 +92,6 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
   displayData(filteredData);
 });
 
-
 document.getElementById("datePicker").addEventListener("change", async (e) => {
   const date = e.target.value;
 
@@ -107,7 +109,6 @@ document.getElementById("datePicker").addEventListener("change", async (e) => {
   showLoader(false);
 });
 
-
 function saveFavorite(item) {
   let favs = JSON.parse(localStorage.getItem("favorites")) || [];
   favs.push(item);
@@ -115,15 +116,13 @@ function saveFavorite(item) {
   alert("Saved!");
 }
 
-
 document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("light");
 });
-
 
 function showLoader(state) {
   document.getElementById("loader").style.display = state ? "block" : "none";
 }
 
-
+// INIT
 fetchAPOD();

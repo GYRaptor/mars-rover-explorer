@@ -1,8 +1,10 @@
 const API_KEY = "Aj4ZZNvf65Rdd6Yt1lfuoaIK3gRr6MUXVht46XRW";
 
+
 let apodData = [];
 let filteredData = [];
 
+// FETCH DATA
 async function fetchAPOD() {
   showLoader(true);
 
@@ -25,6 +27,7 @@ async function fetchAPOD() {
   showLoader(false);
 }
 
+// DISPLAY DATA
 function displayData(data) {
   const container = document.getElementById("container");
   container.innerHTML = "";
@@ -34,7 +37,7 @@ function displayData(data) {
     return;
   }
 
-  data.map(item => {
+  data.forEach((item, index) => {
     const card = document.createElement("div");
     card.classList.add("card");
 
@@ -57,18 +60,15 @@ function displayData(data) {
           <button>View HD</button>
         </a>
 
-        <button onclick='saveFavorite(${JSON.stringify(item)})'>Save</button>
+        <button onclick="saveFavorite(${index})">Save</button>
       </div>
     `;
 
     container.appendChild(card);
-
-    setTimeout(() => {
-      card.style.opacity = 1;
-    }, 100);
   });
 }
 
+// SEARCH
 document.getElementById("searchInput").addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
 
@@ -79,7 +79,7 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   displayData(filteredData);
 });
 
-
+// SORT
 document.getElementById("sortSelect").addEventListener("change", (e) => {
   const value = e.target.value;
 
@@ -92,6 +92,7 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
   displayData(filteredData);
 });
 
+// DATE FILTER
 document.getElementById("datePicker").addEventListener("change", async (e) => {
   const date = e.target.value;
 
@@ -109,17 +110,30 @@ document.getElementById("datePicker").addEventListener("change", async (e) => {
   showLoader(false);
 });
 
-function saveFavorite(item) {
+// FIXED FAVORITES FUNCTION
+function saveFavorite(index) {
   let favs = JSON.parse(localStorage.getItem("favorites")) || [];
-  favs.push(item);
+
+  favs.push(apodData[index]);
+
   localStorage.setItem("favorites", JSON.stringify(favs));
   alert("Saved!");
 }
 
-document.getElementById("themeToggle").addEventListener("click", () => {
+// THEME TOGGLE
+const themeBtn = document.getElementById("themeToggle");
+
+themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("light");
+
+  if (document.body.classList.contains("light")) {
+    themeBtn.textContent = "🌞";
+  } else {
+    themeBtn.textContent = "🌙";
+  }
 });
 
+// LOADER
 function showLoader(state) {
   document.getElementById("loader").style.display = state ? "block" : "none";
 }
